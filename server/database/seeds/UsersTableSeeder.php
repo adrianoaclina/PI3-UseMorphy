@@ -16,10 +16,10 @@ class UsersTableSeeder extends Seeder
 
         if(!$user){
             User::create([
-                'nome' => 'Adriano Aclina',
+                'name' => 'Adriano Aclina',
                 'cpf' => '47533804830',
                 'email' => 'adriano.aclina@gmail.com',
-                'senha' => Hash::make('123456789'),
+                'password' => Hash::make('123456789'),
                 'telefone' => '11978018651',
                 'role' => 'admin'
             ]);

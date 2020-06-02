@@ -14,14 +14,13 @@ class UsersController extends Controller
         else
             $user->role = 'admin';
         $user->save();
-        return response()->json([
-            'mensagem' => 'Usuário atualizado!'
-        ], 200);
+        session()->flash('success', 'Usuário alterado com sucesso!');
+        return redirect()->back();
     }
     public function update(EditUserRequest $request, $id){
         $user = User::find($id);
         $user->update([
-            'nome' => $request->nome,
+            'name' => $request->name,
             'cpf' => $request->cpf,
             'telefone' => $request->telefone,
         ]);
@@ -32,8 +31,7 @@ class UsersController extends Controller
         if($request->password)
             $user->password = Hash::make($request->password);
         $user->save();
-        return response()->json([
-            'mensagem' => 'Usuário editado com sucesso!'
-        ], 200);
+        session()->flash('success', 'Usuário alterado com sucesso!');
+        return redirect()->back();
     }
 }

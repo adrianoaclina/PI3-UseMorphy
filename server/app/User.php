@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nome', 'cpf', 'email', 'senha', 'telefone'
+        'name', 'cpf', 'email', 'password', 'telefone'
     ];
 
     /**
@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'senha', 'remember_token',
+        'password', 'remember_token',
     ];
 
     /**
@@ -39,5 +39,9 @@ class User extends Authenticatable
 
     public function carrinho(){
         return $this->hasOne(Carrinho::class);
+    }
+
+    public function isAdmin(){
+        return $this->role == 'admin';
     }
 }
