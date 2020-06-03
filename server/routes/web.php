@@ -20,3 +20,5 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('config', 'PerfisController@users')->name('config');
     Route::put('change-admin/{id}', 'UsersController@changeAdmin')->name('change-admin');
 });
+
+Route::get('/produto/{id}', 'ProdutosController@show')->name('produto-show');

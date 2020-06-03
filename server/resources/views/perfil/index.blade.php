@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="justify-content-center">
-        <h1 class="text-center">Perfil do {{ $user->name }}</h1>
+        <h1 class="text-center">Meu cadastro</h1>
         <div class="card-body card col-md-12">
 
         <form class="justify-content-center" method="POST" action="{{ route('editPerfil', $user->id)}}">
@@ -92,10 +92,10 @@
 
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-outline-secondary">
                             {{ __('Salvar alterações') }}
                         </button>
-                        <a href="{{route('store')}}" class="btn btn-primary">
+                        <a href="{{route('store')}}" class="btn btn-outline-secondary">
                             {{ __('Voltar') }}
                         </a>
                     </div>

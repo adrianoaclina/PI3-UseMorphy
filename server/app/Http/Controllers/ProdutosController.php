@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Request\CreateProdutoRequest;
 use App\Produto;
+use App\Categoria;
+use App\Tag;
 class ProdutosController extends Controller
 {
     public function index(){
@@ -24,9 +26,9 @@ class ProdutosController extends Controller
     public function show($id){
         $produto = Produto::find($id);
         $categoria = Produto::find($id)->categoria;
-        $tags = Produto::find($id)->tags;
-        $array = [$produto, $categoria, $tags];
-        return response()->json($array);
+        // $tags = Produto::find($id)->tags;
+        $array = [$produto, $categoria];
+        return view('produtos.show')->with('produto', $array);
     }
 
     public function update(EditProdutoRequest $request, $id){
