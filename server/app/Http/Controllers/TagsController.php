@@ -3,42 +3,72 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Tag;
 use App\Http\Requests\CreateTagRequest;
 use App\Http\Requests\EditTagRequest;
-use App\Tag;
 
 class TagsController extends Controller
 {
-    public function index(){
-        return response()->json(Tag::all()->produtos);
+    public function index()
+    {
+        return view('tags.index')->with('tags',Tag::all());
     }
 
-    public function store(CreateTagRequest $request){
-        $tag = Tag::create($request->all());
-        $tag->save();
-        return response()->json([
-            'mensagem' => 'Tag cadastrada com sucesso!'
-        ], 201);
+    public function create()
+    {
+        return view('tags.create');
     }
 
-    public function show($id){
+    public function store(CreateTagRequest $request)
+    {
+        Tag::create($request->all());
+        session()->flash('success', 'Tag criada com sucesso!');
+        return redirect(route('tags.index'));
     }
 
-    public function update(EditTagRequest $request, $id){
-        $tag = Tag::find($id);
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Tag $tag)
+    {
+        return view('tags.edit')->with('tag', $tag);
+    }
+
+    public function update(EditTagRequest $request, Tag $tag)
+    {
         $tag->update([
-            'nome' => $request->nome
+            'nome' => $request->name
         ]);
-        return response()->json([
-            'mensagem' => 'Tag atualizada com sucesso'
-        ], 200);
+
+        session()->flash('success', 'Tag alterada com sucesso!');
+        return redirect(route('tags.index'));
     }
-    
-    public function destroy($id){
+
+    public function destroy($id)
+    {
         $tag = Tag::find($id);
+        
+        $produto_count = $tag->produtos()->count();
+        if($tag->produtos()->count() > 0){
+            session()->flash('error', 'Não pode ser apagada pois temos ('.$produto_count.') produto(s) com essa tag');
+            return redirect()->back();
+        }
         $tag->delete();
-        return response()->json([
-            'mensagem' => 'Tag excluída com sucesso'
-        ], 200);
+        session()->flash('success', 'Tag movida para lixeira com sucesso!');
+        return redirect()->back();
     }
 }

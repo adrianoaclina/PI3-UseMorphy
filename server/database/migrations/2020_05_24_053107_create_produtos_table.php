@@ -18,6 +18,7 @@ class CreateProdutosTable extends Migration
             $table->string('nome');
             $table->text('imagem');
             $table->text('descricao');
+            $table->enum('tamanho', ['PP', 'P', 'M', 'G', 'GG']);
             $table->decimal('preco', 5, 2);
             $table->decimal('desconto', 5, 2);
             $table->integer('estoque');

@@ -15,6 +15,8 @@ class CreatePedidosTable extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->enum('status', ['Aprovado', 'Cancelado']);
+            $table->float('total', 8, 2);
             $table->timestamps();
         });
     }

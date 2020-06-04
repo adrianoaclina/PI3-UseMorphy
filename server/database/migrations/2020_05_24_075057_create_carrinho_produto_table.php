@@ -16,6 +16,7 @@ class CreateCarrinhoProdutoTable extends Migration
         Schema::create('carrinho_produto', function (Blueprint $table) {
             $table->integer('carrinho_id');
             $table->integer('produto_id');
+            $table->integer('quantidade');
             $table->timestamps();
         });
     }
