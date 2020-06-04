@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use App\Categoria;
 class VerifyCategoriasCount
 {
     /**
@@ -17,7 +17,7 @@ class VerifyCategoriasCount
     {
         if(Categoria::all()->count() == 0){
             session()->flash('error', 'Você precisa criar uma categoria antes de criar um produto.');
-            return redirect(route('categories.create'));
+            return redirect(route('categorias.create'));
         }
         return $next($request);
     }

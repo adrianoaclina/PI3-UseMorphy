@@ -25,23 +25,21 @@
                 </div>
             </div>
             <div class="col-md-6 text-center">
-                
-                    <h2>{{ $produto->nome }}</h2>
-                    <p>{{ $produto->descricao}}</p>
-                    <div class="form-group text-center ">
-                        <label for="tamanho">Tamanho:</label>
-                        <select name="tamanho" class="form-control tags_select2">
-                            <option value="PP">PP</option>
-                            <option value="P">P</option>
-                            <option value="M">M</option>
-                            <option value="G">G</option>
-                            <option value="GG">GG</option>
-                        </select>
-                    </div>
-
-                    </select>
-                    <a href="{{route('carrinho-store', $produto->id)}}" class="btn btn-secondary">Comprar</a>
-
+            <form action="{{route('carrinho-store')}}" method="POST">
+            @csrf
+                <h1>{{ $produto->nome }}</h1>
+                <h2>{{ $produto->preco}}</h2>
+                <p>{{ $produto->descricao}}</p>
+                <input type="hidden" name="id" value="{{$produto->id}}">
+                <input type="hidden" name="nome" value="{{$produto->nome}}">
+                <input type="hidden" name="preco" value="{{$produto->preco}}">
+                <div class="text-center ">
+                <div class="form-group">
+                    <label>Quantidade</label>
+                    <input type="number" name="quantidade" class="col-md-4" value="1">
+                </div>
+                    <button type="submit" class="btn btn-secondary">Comprar</button>  
+            </form>
             </div>
         @else
             <p class="text-center">Não foi encontrado o produto</p>

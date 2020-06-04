@@ -18,6 +18,7 @@
                 <th>Total</th>
                 <th>Situação</th>
                 <th>Ações</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,7 @@
                             </button>
                         </form>
                     </td>
+                    <td><span class="material-icons" style="cursor: pointer;">expand_more</span></td>
                 </tr>
                 <tr>
                     <td colspan="6">
@@ -53,7 +55,6 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <p>opa</p>
                         </div>
                     </td>
                 </tr>

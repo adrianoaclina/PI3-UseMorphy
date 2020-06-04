@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class ProdutosController extends Controller
 {   
     public function __construct(){
-        $this->middleware('VerifyCategoriesCount')->only(['create','store']);
+        $this->middleware('VerifyCategoriasCount')->only(['create','store']);
     }
     public function index(){
         return view('produtos.index')->with('produtos',Produto::all());

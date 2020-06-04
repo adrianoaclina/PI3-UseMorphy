@@ -19,13 +19,16 @@ class CarrinhosController extends Controller
         return view('carrinho.index')->with('produtos', $carrinho->produtos);
     }
 
-    public function store($id){
+    public function store(Request $request){
         $user = auth()->user();
         $carrinho = Carrinho::updateOrCreate(['user_id' => $user->id]);
-        $produto = Produto::find($id);
-        //O produto já está no carrinho
-        $carrinho->produtos()->saveMany([$produto]);
-        session()->flash('success', 'O produto ('.$produto->nome.') foi adicionado no carrinho.');
+        DB::table('carrinho_produto')->insert([
+            'carrinho_id' => $carrinho->id,
+            'produto_id' => $request->id,
+            'quantidade' => $request->quantidade
+            ]); 
+
+        session()->flash('success', 'O produto ('.$request->nome.') foi adicionado no carrinho.');
         
         return redirect()->back();
     }
