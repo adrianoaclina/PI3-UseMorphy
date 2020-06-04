@@ -31,7 +31,7 @@ Route::middleware(['auth','admin'])->group(function () {
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/carrinho', 'CarrinhosController@index')->name('carrinho');
-    Route::get('/carrinho/{id}/store', 'CarrinhosController@store')->name('carrinho-store');
+    Route::get('/carrinho/store', 'CarrinhosController@store')->name('carrinho-store');
     Route::get('/carrinho/{produto}/remove', 'CarrinhosController@destroy')->name('carrinho-remove');
     Route::get('/perfil', 'PerfisController@show')->name('perfil');
     Route::put('/perfil/{id}', 'UsersController@update')->name('editPerfil');

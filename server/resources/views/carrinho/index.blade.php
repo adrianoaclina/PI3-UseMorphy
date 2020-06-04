@@ -6,6 +6,7 @@
         <thead class="thead-dark">
             <tr>
                 <th>Produto</th>
+                <th>Tamanho</th>
                 <th>Preço</th>
                 <th>Quantidade</th>
                 <th>Remover</th>
@@ -14,9 +15,10 @@
         <tbody>
             @foreach($produtos as $produto)
             <tr>
-            <td><a href="{{route('produto-show', $produto->id)}}">{{$produto->imagem}}{{ $produto->nome }}</a></td>
+            <td><a href="{{ route('produtos.show', $produto->id) }}">{{ $produto->nome }}</a></td>
+                <td>{{$produto->tamanho}}</td>
                 <td>{{ $produto->preco }}</td>
-                <td><input name="quantidade" type="range">Qntd</td>
+                <td><input name="quantidade" type="number">Qntd</td>
                 <td><a href="{{ route('carrinho-remove', $produto->id) }}" class="btn btn-danger btn-sm">Remover</a></td>
             </tr>
             @endforeach
