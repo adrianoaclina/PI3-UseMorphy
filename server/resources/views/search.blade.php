@@ -26,10 +26,9 @@
                     <span class="preco-antigo">{{ $produto->preco() }}</span>
                     <p>{{ $produto->precoDesconto() }}</p>
                 </div>
-                <p><a href="{{ route('carrinho-store', $produto->id) }}"
-                        class="btn btn-outline-secondary">Comprar</a>
+                <p>
                     <a href="{{ route('produtos.show', $produto->id) }}"
-                        class="btn btn-outline-secondary">Detalhes</a>
+                        class="btn btn-outline-secondary">Comprar</a>
                 </p>
             </div>
         @empty

@@ -18,7 +18,7 @@
             <td><a href="{{ route('produtos.show', $produto->id) }}">{{ $produto->nome }}</a></td>
                 <td>{{$produto->tamanho}}</td>
                 <td>{{ $produto->preco }}</td>
-                <td><input name="quantidade" type="number">Qntd</td>
+                <td><input name="quantidade" type="number" value="{{DB::table('carrinho_produto')->select('quantidade')->where('produto_id', $produto->id)->get(0)[0]->quantidade}}">Qntd</td>
                 <td><a href="{{ route('carrinho-remove', $produto->id) }}" class="btn btn-danger btn-sm">Remover</a></td>
             </tr>
             @endforeach

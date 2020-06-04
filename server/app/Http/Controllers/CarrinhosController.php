@@ -22,15 +22,13 @@ class CarrinhosController extends Controller
     public function store(Request $request){
         $user = auth()->user();
         $carrinho = Carrinho::updateOrCreate(['user_id' => $user->id]);
-        $produto = Produto::all()->where('nome', $request->nome);
-
         DB::table('carrinho_produto')->insert([
-            'carrinho_id' => $carrinho,
-            'produto_id' => $produto_id,
+            'carrinho_id' => $carrinho->id,
+            'produto_id' => $request->id,
             'quantidade' => $request->quantidade
-            ]);
+            ]); 
 
-        session()->flash('success', 'O produto ('.$produto->nome.') foi adicionado no carrinho.');
+        session()->flash('success', 'O produto ('.$request->nome.') foi adicionado no carrinho.');
         
         return redirect()->back();
     }

@@ -30,18 +30,10 @@
                 <h1>{{ $produto->nome }}</h1>
                 <h2>{{ $produto->preco}}</h2>
                 <p>{{ $produto->descricao}}</p>
+                <input type="hidden" name="id" value="{{$produto->id}}">
                 <input type="hidden" name="nome" value="{{$produto->nome}}">
                 <input type="hidden" name="preco" value="{{$produto->preco}}">
                 <div class="text-center ">
-                <label for="tamanho">Tamanho:</label>
-                    <select name="tamanho" style="width: 100px">
-                        <option value="PP">PP</option>
-                        <option value="P">P</option>
-                        <option value="M">M</option>
-                        <option value="G">G</option>
-                        <option value="GG">GG</option>
-                    </select>
-                </div>
                 <div class="form-group">
                     <label>Quantidade</label>
                     <input type="number" name="quantidade" class="col-md-4" value="1">
