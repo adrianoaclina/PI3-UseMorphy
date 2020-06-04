@@ -3,37 +3,52 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Request\CreateProdutoRequest;
+use App\Http\Requests\CreateProdutoRequest;
+use App\Http\Requests\EditProdutoRequest;
 use App\Produto;
 use App\Categoria;
 use App\Tag;
+use Illuminate\Support\Facades\Storage;
 class ProdutosController extends Controller
-{
+{   
+    public function __construct(){
+        $this->middleware('VerifyCategoriesCount')->only(['create','store']);
+    }
     public function index(){
-        return response()->json(Produto::all()->categoria);
+        return view('produtos.index')->with('produtos',Produto::all());
     }
 
+    public function create()
+    {
+        return view('produtos.create')->with('categorias', Categoria::all())->with('tags', Tag::all());
+    }
     public function store(CreateProdutoRequest $request){
-        $image = $request->image->store('produtos');
+        $image = $request->imagem->store('produtos');
         $produto = Produto::create($request->all());
-        $produto->image = $image;
+
+        //atualiza o endereço da imagem no banco
+        $produto->imagem = $image;
         $produto->save();
-        return response()->json([
-            'mensagem' => 'Produto cadastrado com sucesso!'
-        ], 201);
+
+        //salva os dados das tags
+        if($request->tags){
+            $produto->tags()->attach($request->tags);
+        }
+        session()->flash('success', 'Produto criado com sucesso!');
+        return redirect(route('produtos.index'));
     }
 
     public function show($id){
         $produto = Produto::find($id);
-        $categoria = Produto::find($id)->categoria;
-        // $tags = Produto::find($id)->tags;
-        $array = [$produto, $categoria];
-        return view('produtos.show')->with('produto', $array);
+        return view('produtos.show')->with('produto', $produto);
     }
 
-    public function update(EditProdutoRequest $request, $id){
+    public function edit(Produto $produto)
+    {
+        return view('produtos.edit')->with('produto', $produto)->with('categorias', Categoria::all())->with('tags', Tag::all());
+    }
+    public function update(EditProdutoRequest $request, Produto $produto){
 
-        $produto = Produto::find($id);
         $produto->update([
             'nome' => $request->nome,
             'descricao' => $request->descricao,
@@ -43,6 +58,7 @@ class ProdutosController extends Controller
             'categoria_id' => $request->categoria_id
         ]);
 
+        $produto->tags()->sync($request->tags);
         if($request->imagem){
             //apaga imagem anterior
             Storage::delete($produto->imagem);
@@ -54,16 +70,15 @@ class ProdutosController extends Controller
             $produto->imagem = $imagem;
             $produto->save();
         }
-        return response()->json([
-            'mensagem' => 'Produto atualizado com sucesso'
-        ], 200);
+        session()->flash('success', 'Produto alterado com sucesso!');
+        return redirect(route('produtos.index'));
 
     }
     public function destroy($id){
         $produto = Produto::find($id);
+        Storage::delete($produto->image);
         $produto->delete();
-        return response()->json([
-            'mensagem' => 'Produto excluído com sucesso'
-        ], 200);
+        session()->flash('success', 'Produto removido com sucesso!');
+        return redirect()->back();
     }
 }

@@ -20,4 +20,17 @@ class Produto extends Model
     public function tags(){
         return $this->belongsToMany(Tag::class);
     }
+    public function hasTag($tagId){
+        return in_array($tagId, $this->tags->pluck('id')->toArray());
+    }
+
+    public function precoDesconto(){
+        return $this->fMoney($this->preco * (1-$this->desconto/100));
+    }
+    public function preco(){
+        return $this->fMoney($this->preco);
+    }
+    public function fMoney($value){
+        return 'R$'.number_format($value, 2);
+    }
 }

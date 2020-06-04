@@ -1,32 +1,52 @@
 @extends('layouts.app')
+@section('javascript')
+    <script>
+        window.onload = function() {
+            $('.tags_select2').select2();
+        };
+    </script>
+@endsection
 @section('content')
 <link href='https://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+        
+<section class="container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page">{{$produto->categoria->nome}}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{$produto->nome}}</li>
+    </ol>
+    <div class="row">
+        @if($produto)
+            <div class="col-md-6">
+                <div>
+                    <div>
+                        <img src="{{ asset('storage/'.$produto->imagem) }}" width="540"
+                            height="700">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                
+                    <h2>{{ $produto->nome }}</h2>
+                    <p>{{ $produto->descricao}}</p>
+                    <div class="form-group text-center ">
+                        <label for="tamanho">Tamanho:</label>
+                        <select name="tamanho" class="form-control tags_select2">
+                            <option value="PP">PP</option>
+                            <option value="P">P</option>
+                            <option value="M">M</option>
+                            <option value="G">G</option>
+                            <option value="GG">GG</option>
+                        </select>
+                    </div>
 
-<div class="wrapper">
-  
-  <div class="col-1-2">
-    <div class="product-wrap">
-      <div class="product-shot">
-        <img src="https://s3-us-west-2.amazonaws.com/hypebeast-wordpress/image/2009/10/smart-magazine-stussy-stock-link-tshirt-3.jpg" alt="" />
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-1-2">
-    <div class="product-info">
-      {{-- <h2>{{$produto->nome}}</h2> --}}
-      <div class="desc">
-        {{$produto[0]->nome}}
-      </div>
-      <ul class="sizing-list">
-        <li class="size">S</li>
-        <li class="size active">M</li>
-        <li class="size">L</li>
-      </ul>
-      <a href="" class="button">Add to Cart</a>
-    </div>
-    
-  </div>
-</div>
+                    </select>
+                    <a href="{{route('carrinho-store', $produto->id)}}" class="btn btn-secondary">Comprar</a>
 
+            </div>
+        @else
+            <p class="text-center">Não foi encontrado o produto</p>
+        @endif
+
+    </div>
+</section>
 @endsection
